@@ -1,6 +1,5 @@
 package sample;
 
-import com.sun.xml.internal.fastinfoset.stax.events.Util;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,8 +8,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import tools.Response;
-import tools.Utils;
 import tools.models.Row;
 
 import java.net.URL;
@@ -55,16 +52,23 @@ public class MainWindowController implements Initializable {
 
 
         List<String> list = new ArrayList<>();
-        list.add("murder");
-        list.add("murder2");
-        list.add("murder3");
-        list.add("murder4");
+        list.add("убиство");
+        list.add("кража");
+        list.add("кража со взломом");
+        list.add("массовые волнения");
+        list.add("причинение вреда здоровью");
         incidentType.getItems().setAll(list);
         incidentType.getSelectionModel().selectFirst();
 
 
 
-        vehikleType.getItems().setAll(list);
+        List<String> vehicleList = new ArrayList<>();
+        vehicleList.add("мотоцикл");
+        vehicleList.add("автомобиль");
+        vehicleList.add("саомлет");
+        vehicleList.add("вертолет");
+        vehicleList.add("броне автомобиль");
+        vehikleType.getItems().setAll(vehicleList);
         vehikleType.getSelectionModel().selectFirst();
 
 
@@ -77,12 +81,20 @@ public class MainWindowController implements Initializable {
                 new PropertyValueFactory<Row, String>("incident"));
 
         TableColumn emailCol = new TableColumn("vehicle");
+        emailCol.setCellValueFactory(
+                new PropertyValueFactory<Row, String>("vehicle"));
+
+
         TableColumn description_ = new TableColumn("description");
+        description_.setCellValueFactory(
+                new PropertyValueFactory<Row, String>("description"));
 
         demandsTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol, description_);
-        ObservableList cd = FXCollections.observableArrayList(new Row(1L, "one"), new Row(2L, "two"));
+        ObservableList cd = FXCollections.observableArrayList(
+                new Row(1L, "кража","мотоцикл", "кража на пересечении улиц Абай Ауезов"),
+                new Row(2L, "убиство", "автомобиль", "убиство на Сатпаева Д23 кв 45"),
+                new Row(3L, "массовые волнения", "броне автомобиль", "на центральной площади массовые волнения"));
         demandsTable.setItems(cd);
-
 
 
         ToggleGroup toggleGroup = new ToggleGroup();

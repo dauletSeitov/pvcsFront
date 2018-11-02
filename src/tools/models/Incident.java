@@ -6,12 +6,18 @@ public class Incident {
     private String name;
     private String description;
     private int dangerLevel;
+    private String incidentType;
+    private String vehicleType;
+    private String atachment;
 
-    public Incident(Long id, String name, String description, int dangerLevel) {
+    public Incident(Long id, String name, String description, int dangerLevel, String incidentType, String vehicleType, String atachment) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.dangerLevel = dangerLevel;
+        this.incidentType = incidentType;
+        this.vehicleType = vehicleType;
+        this.atachment = atachment;
     }
 
     public Long getId() {
@@ -46,13 +52,27 @@ public class Incident {
         this.dangerLevel = dangerLevel;
     }
 
-    @Override
-    public String toString() {
-        return "Incident{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", dangerLevel=" + dangerLevel +
-                '}';
+    public String getIncidentType() {
+        return incidentType;
+    }
+
+    public void setIncidentType(String incidentType) {
+        this.incidentType = incidentType;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
+    }
+
+    public String getAtachment() {
+        return atachment;
+    }
+
+    public void setAtachment(String atachment) {
+        this.atachment = atachment;
     }
 }

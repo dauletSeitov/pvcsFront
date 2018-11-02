@@ -12,28 +12,22 @@ import javafx.util.StringConverter;
 import tools.Response;
 import tools.Utils;
 import tools.models.Incident;
+import tools.models.IncidentType;
 import tools.models.Row;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable {
 
-    public RadioButton rb1;
-    public RadioButton rb3;
-    public RadioButton rb7;
-    public RadioButton rb6;
-    public RadioButton rb5;
-    public RadioButton rb4;
-    public RadioButton rb2;
-    public RadioButton rb8;
-    public RadioButton rb9;
-    public RadioButton rb10;
-    public TextArea description;
+    @FXML    public RadioButton rb1;    @FXML    public RadioButton rb3;    @FXML    public RadioButton rb7;
+    @FXML    public RadioButton rb6;    @FXML    public RadioButton rb5;    @FXML    public RadioButton rb4;
+    @FXML    public RadioButton rb2;    @FXML    public RadioButton rb8;    @FXML    public RadioButton rb9;
+    @FXML    public RadioButton rb10;
 
+    @FXML
+    public TextArea description;
     @FXML
     private TableView demandsTable;
     @FXML
@@ -54,79 +48,78 @@ public class MainWindowController implements Initializable {
 
 
         // incident
-        Response<Incident[]> incident = Utils.GET("incident/", Incident[].class);
+        Response<IncidentType[]> incident = Utils.GET("incident/", IncidentType[].class);
         incidentType.getItems().setAll(Arrays.asList(incident.getResponse()));
-
-        incidentType.setConverter(new StringConverter<Incident>() {
-
-            @Override
-            public String toString(Incident incident) {
-                return incident.getName();
-            }
-
-            @Override
-            public Incident fromString(String s) {
-                return null;
-            }
-//            @Override
-//            public AirPort fromString(String string) {
-//                return combo.getItems().stream().filter(ap ->
-//                        ap.getName().equals(string)).findFirst().orElse(null);
-//            }
-        });
+        incidentType.setConverter(new StringConverterImpl<>());
         incidentType.getSelectionModel().selectFirst();
         // incident
 
 
-
-        Response<Incident[]> vehicles = Utils.GET("vehicle/", Incident[].class);
-
-//        List<String> vehicleList = new ArrayList<>();
-//        vehicleList.add("мотоцикл");
-//        vehicleList.add("автомобиль");
-//        vehicleList.add("саомлет");
-//        vehicleList.add("вертолет");
-//        vehicleList.add("броне автомобиль");
-        vehikleType.getItems().setAll(Arrays.asList(incident.getResponse()));
+        //vehicle
+        Response<IncidentType[]> vehicles = Utils.GET("incident-type/", IncidentType[].class);
+        vehikleType.getItems().setAll(Arrays.asList(vehicles.getResponse()));
+        vehikleType.setConverter(new StringConverterImpl<>());
         vehikleType.getSelectionModel().selectFirst();
+        //vehicle
 
 
         TableColumn cl1 = new TableColumn("id");
         cl1.setCellValueFactory(new PropertyValueFactory<Row, String>("id"));
 
         TableColumn cl2 = new TableColumn("incident");
-        cl2.setCellValueFactory(new PropertyValueFactory<Row, String>("incident"));
+        cl2.setCellValueFactory(new PropertyValueFactory<Row, String>("incidentType"));
 
         TableColumn cl3 = new TableColumn("vehicle");
-        cl3.setCellValueFactory(new PropertyValueFactory<Row, String>("vehicle"));
-
+        cl3.setCellValueFactory(new PropertyValueFactory<Row, String>("vehicleType"));
 
         TableColumn cl4 = new TableColumn("description");
         cl4.setCellValueFactory(new PropertyValueFactory<Row, String>("description"));
 
         demandsTable.getColumns().addAll(cl1, cl2, cl3, cl4);
-        ObservableList cd = FXCollections.observableArrayList(
-                new Row(1L, "кража","мотоцикл", "кража на пересечении улиц Абай Ауезов"),
-                new Row(2L, "убиство", "автомобиль", "убиство на Сатпаева Д23 кв 45"),
-                new Row(3L, "массовые волнения", "броне автомобиль", "на центральной площади массовые волнения"));
+
+        Response<Incident[]> incidents = Utils.GET("incident/", Incident[].class);
+
+        ObservableList cd = FXCollections.observableArrayList(incidents.getResponse());
         demandsTable.setItems(cd);
 
 
         ToggleGroup toggleGroup = new ToggleGroup();
         rb1.setToggleGroup(toggleGroup);
-        rb3.setToggleGroup(toggleGroup);;
-        rb7.setToggleGroup(toggleGroup);;
-        rb6.setToggleGroup(toggleGroup);;
-        rb5.setToggleGroup(toggleGroup);;
-        rb4.setToggleGroup(toggleGroup);;
-        rb2.setToggleGroup(toggleGroup);;
-        rb8.setToggleGroup(toggleGroup);;
-        rb9.setToggleGroup(toggleGroup);;
+        rb1.setSelected(true);
+        rb3.setToggleGroup(toggleGroup);
+        rb7.setToggleGroup(toggleGroup);
+        rb6.setToggleGroup(toggleGroup);
+        rb5.setToggleGroup(toggleGroup);
+        rb4.setToggleGroup(toggleGroup);
+        rb2.setToggleGroup(toggleGroup);
+        rb8.setToggleGroup(toggleGroup);
+        rb9.setToggleGroup(toggleGroup);
         rb10.setToggleGroup(toggleGroup);
-
+        rb1.setSelected(true);
 
         description.setPromptText("enter the specification ...");
 
     }
+
+
 }
 
+
+class StringConverterImpl<T extends IncidentType> extends StringConverter<T>{
+
+
+    @Override
+    public String toString(T t) {
+        return t.getName();
+    }
+
+    @Override
+    public T fromString(String s) {
+        return null;
+    }
+
+//            public AirPort fromString(String string) {
+//                return combo.getItems().stream().filter(ap ->
+//                        ap.getName().equals(string)).findFirst().orElse(null);
+//            }
+}

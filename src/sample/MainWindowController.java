@@ -8,10 +8,15 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.util.StringConverter;
+import tools.Response;
+import tools.Utils;
+import tools.models.Incident;
 import tools.models.Row;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,6 +33,7 @@ public class MainWindowController implements Initializable {
     public RadioButton rb9;
     public RadioButton rb10;
     public TextArea description;
+
     @FXML
     private TableView demandsTable;
     @FXML
@@ -41,55 +47,64 @@ public class MainWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        // map
         WebEngine webEngine = googleMap.getEngine();
         webEngine.load("https://www.google.com/maps");
+        // map
 
 
-        //final Response<List> incident = Utils.GET("incident", .class);
+        // incident
+        Response<Incident[]> incident = Utils.GET("incident/", Incident[].class);
+        incidentType.getItems().setAll(Arrays.asList(incident.getResponse()));
 
-        //System.out.println(incident);
+        incidentType.setConverter(new StringConverter<Incident>() {
 
+            @Override
+            public String toString(Incident incident) {
+                return incident.getName();
+            }
 
-
-        List<String> list = new ArrayList<>();
-        list.add("убиство");
-        list.add("кража");
-        list.add("кража со взломом");
-        list.add("массовые волнения");
-        list.add("причинение вреда здоровью");
-        incidentType.getItems().setAll(list);
+            @Override
+            public Incident fromString(String s) {
+                return null;
+            }
+//            @Override
+//            public AirPort fromString(String string) {
+//                return combo.getItems().stream().filter(ap ->
+//                        ap.getName().equals(string)).findFirst().orElse(null);
+//            }
+        });
         incidentType.getSelectionModel().selectFirst();
+        // incident
 
 
 
-        List<String> vehicleList = new ArrayList<>();
-        vehicleList.add("мотоцикл");
-        vehicleList.add("автомобиль");
-        vehicleList.add("саомлет");
-        vehicleList.add("вертолет");
-        vehicleList.add("броне автомобиль");
-        vehikleType.getItems().setAll(vehicleList);
+        Response<Incident[]> vehicles = Utils.GET("vehicle/", Incident[].class);
+
+//        List<String> vehicleList = new ArrayList<>();
+//        vehicleList.add("мотоцикл");
+//        vehicleList.add("автомобиль");
+//        vehicleList.add("саомлет");
+//        vehicleList.add("вертолет");
+//        vehicleList.add("броне автомобиль");
+        vehikleType.getItems().setAll(Arrays.asList(incident.getResponse()));
         vehikleType.getSelectionModel().selectFirst();
 
 
-        TableColumn firstNameCol = new TableColumn("id");
-        firstNameCol.setCellValueFactory(
-                new PropertyValueFactory<Row, String>("id"));
+        TableColumn cl1 = new TableColumn("id");
+        cl1.setCellValueFactory(new PropertyValueFactory<Row, String>("id"));
 
-        TableColumn lastNameCol = new TableColumn("incident");
-        lastNameCol.setCellValueFactory(
-                new PropertyValueFactory<Row, String>("incident"));
+        TableColumn cl2 = new TableColumn("incident");
+        cl2.setCellValueFactory(new PropertyValueFactory<Row, String>("incident"));
 
-        TableColumn emailCol = new TableColumn("vehicle");
-        emailCol.setCellValueFactory(
-                new PropertyValueFactory<Row, String>("vehicle"));
+        TableColumn cl3 = new TableColumn("vehicle");
+        cl3.setCellValueFactory(new PropertyValueFactory<Row, String>("vehicle"));
 
 
-        TableColumn description_ = new TableColumn("description");
-        description_.setCellValueFactory(
-                new PropertyValueFactory<Row, String>("description"));
+        TableColumn cl4 = new TableColumn("description");
+        cl4.setCellValueFactory(new PropertyValueFactory<Row, String>("description"));
 
-        demandsTable.getColumns().addAll(firstNameCol, lastNameCol, emailCol, description_);
+        demandsTable.getColumns().addAll(cl1, cl2, cl3, cl4);
         ObservableList cd = FXCollections.observableArrayList(
                 new Row(1L, "кража","мотоцикл", "кража на пересечении улиц Абай Ауезов"),
                 new Row(2L, "убиство", "автомобиль", "убиство на Сатпаева Д23 кв 45"),

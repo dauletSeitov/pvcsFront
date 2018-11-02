@@ -29,7 +29,7 @@ public class Controller {
     public void doit(ActionEvent actionEvent) {
         System.out.println(login.getText());
         System.out.println(pwd.getText());
-        //showMainWindow(); //TODO delete it
+        showMainWindow(); //TODO delete it
         if(Utils.isEmpty(login.getText()) || Utils.isEmpty(pwd.getText())) {
             errorLabel.setText("login or password is empty");
             return;

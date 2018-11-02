@@ -16,4 +16,12 @@ public class Response<T> {
     public boolean getResponseState(){
         return responseState;
     }
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "response=" + response +
+                ", responseState=" + responseState +
+                '}';
+    }
 }

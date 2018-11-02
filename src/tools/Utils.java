@@ -48,12 +48,12 @@ public class Utils {
             }
 
             String responseRow = result.toString();
-
+            System.out.println("After Http Code: {" + responseCode + "} response: " + responseRow);
             T object = new Gson().fromJson(responseRow, classOfT);
 
             final Response gotObject = new Response(object, responseCode == 200);
 
-            System.out.println("After Http Code: {" + responseCode + "} response: " + responseRow);
+
             if (gotObject.getResponse() == null) {
                 return null;
             } else {

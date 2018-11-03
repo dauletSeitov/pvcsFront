@@ -12,40 +12,60 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1499.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainWindowController">
    <children>
-      <Button layoutX="429.0" layoutY="644.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="82.0" text="save" />
+      <Button fx:id="save" layoutX="429.0" layoutY="644.0" mnemonicParsing="false" onAction="#sendToServer" prefHeight="36.0" prefWidth="82.0" text="save" />
       <WebView fx:id="googleMap" layoutX="547.0" layoutY="22.0" prefHeight="355.0" prefWidth="616.0" />
-      <ComboBox fx:id="incidentType" layoutX="132.0" layoutY="22.0" prefHeight="26.0" prefWidth="379.0" />
+      <ComboBox fx:id="incidentType" layoutX="132.0" layoutY="22.0" onAction="#onActionincIdentType" prefHeight="26.0" prefWidth="379.0" />
       <Label layoutX="23.0" layoutY="24.0" text="incident">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="vehikleType" layoutX="132.0" layoutY="78.0" prefHeight="26.0" prefWidth="379.0" />
-      <Label layoutX="23.0" layoutY="81.0" text="vehicle">
+      <ComboBox fx:id="vehikleType" layoutX="129.0" layoutY="84.0" onAction="#onActionVehikleType" prefHeight="26.0" prefWidth="379.0" />
+      <Label layoutX="20.0" layoutY="86.0" text="vehicle">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="description" layoutX="132.0" layoutY="129.0" prefHeight="200.0" prefWidth="379.0" />
-      <Label layoutX="23.0" layoutY="143.0" text="description">
+      <TextArea fx:id="description" layoutX="576.0" layoutY="145.0" prefHeight="200.0" prefWidth="379.0" />
+      <Label layoutX="79.0" layoutY="529.0" text="description">
          <font>
             <Font size="18.0" />
          </font>ToggleGroup toggleGroup = new ToggleGroup();
       </Label>
-      <Button layoutX="343.0" layoutY="644.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="72.0" text="decline" />
+      <Button layoutX="343.0" layoutY="644.0" mnemonicParsing="false" onAction="#declineOnAction" prefHeight="36.0" prefWidth="72.0" text="clear" />
       <TableView fx:id="demandsTable" layoutX="547.0" layoutY="400.0" prefHeight="355.0" prefWidth="616.0">
       </TableView>
-      <RadioButton fx:id="rb1" layoutX="372.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb2" layoutX="156.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb3" layoutX="180.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb1" layoutX="156.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb2" layoutX="180.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb3" layoutX="204.0" layoutY="368.0" mnemonicParsing="false" />
       <RadioButton fx:id="rb4" layoutX="228.0" layoutY="368.0" mnemonicParsing="false" />
       <RadioButton fx:id="rb5" layoutX="252.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb6" layoutX="324.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb7" layoutX="348.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb8" layoutX="300.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb9" layoutX="204.0" layoutY="368.0" mnemonicParsing="false" />
-      <RadioButton fx:id="rb10" layoutX="276.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb6" layoutX="276.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb7" layoutX="300.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb8" layoutX="324.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb9" layoutX="348.0" layoutY="368.0" mnemonicParsing="false" />
+      <RadioButton fx:id="rb10" layoutX="372.0" layoutY="368.0" mnemonicParsing="false" />
       <Label layoutX="14.0" layoutY="366.0" text="incident level">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="area" layoutX="129.0" layoutY="145.0" onAction="#areaOnAction" prefHeight="26.0" prefWidth="379.0" />
+      <Label fx:id="incidentTypeDescription" layoutX="132.0" layoutY="55.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="vehikleTypeDescription" layoutX="129.0" layoutY="114.0" text="Label">
+         <font>
+            <Font size="18.0" />
+         </font></Label>
+      <Label layoutX="20.0" layoutY="150.0" text="area">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="areaDescription" layoutX="129.0" layoutY="179.0" text="Label">
          <font>
             <Font size="18.0" />
          </font>
